@@ -51,8 +51,9 @@ jobs:
       - name: Run PHPUnit
         run: |
           docker run --rm \
+            --network host \
             -v ${{ github.workspace }}:/app \
-            -e DB_HOST=postgres \
+            -e DB_HOST=localhost \
             -e DB_PORT=5432 \
             -e DB_NAME=ci_test \
             -e DB_USER=ci_user \
