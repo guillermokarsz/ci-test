@@ -28,19 +28,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build PHP environment
-        run: docker build -t ci-php74 .
+      - name: Pull PHP environment
+        run: docker pull ghcr.io/guillermokarsz/ci-php74:latest
 
       - name: Run PHP syntax check
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/app \
-            ci-php74 \
+            ghcr.io/guillermokarsz/ci-php74:latest \
             bash -c "find /app -name '*.php' -not -path '*/vendor/*' -print0 | xargs -0 -n1 php -l && echo 'All PHP files OK'"
 
       - name: Run PHPUnit
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/app \
-            ci-php74 \
+            ghcr.io/guillermokarsz/ci-php74:latest \
             phpunit --testdox /app/tests
