@@ -36,8 +36,7 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/app \
             ci-php74 \
-            find /app -name "*.php" -not -path "*/vendor/*" \
-            -exec php -l {} \;
+            bash -c "find /app -name '*.php' -not -path '*/vendor/*' -print0 | xargs -0 -n1 php -l && echo 'All PHP files OK'"
 
       - name: Run PHPUnit
         run: |
